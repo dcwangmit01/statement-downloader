@@ -30,14 +30,10 @@ make venv
 # Activate the venv
 source .venv/bin/activate
 
-# Set your AWS login credentials into the environment
-export AMAZON_USER='you@domain.com'
-export AMAZON_PASSWORD='your-amazon-password'
-
 # Install the editable version of this amazon-browser-cli tool
 make install
 
 # Run the program
+#   Follow the prompts to login, and press enter to continue
 amazon-browser-cli video clear_history
-
 ```

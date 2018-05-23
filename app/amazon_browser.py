@@ -22,16 +22,6 @@ class AmazonBrowser(object):
         return AmazonBrowser._Singleton
 
     def __init__(self):
-        # Find the AMAZON_USER and AMAZON_PASSWORD through environment variable
-        if 'AMAZON_USER' not in os.environ:
-            print("AMAZON_USER must be defined in environment")
-            sys.exit(1)
-        if 'AMAZON_PASSWORD' not in os.environ:
-            print("AMAZON_PASSWORD must be defined in environment")
-            sys.exit(1)
-        self.AMAZON_USER = os.environ['AMAZON_USER']
-        self.AMAZON_PASSWORD = os.environ['AMAZON_PASSWORD']
-
         self.service = service.Service('chromedriver')
         self.browser = None
         self.is_started = False
@@ -70,15 +60,10 @@ class AmazonBrowser(object):
             'https://www.amazon.com/ap/signin?_encoding=UTF8&ignoreAuthState=1&openid.assoc_handle=usflex&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.mode=checkid_setup&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&openid.ns.pape=http%3A%2F%2Fspecs.openid.net%2Fextensions%2Fpape%2F1.0&openid.pape.max_auth_age=0&openid.return_to=https%3A%2F%2Fwww.amazon.com%2F%3Fref_%3Dnav_ya_signin&switch_account='
         )
 
-        user = br.find_element_by_id("ap_email")
-        user.send_keys(self.AMAZON_USER)
-
-        pass_ = br.find_element_by_name("password")
-        pass_.send_keys(self.AMAZON_PASSWORD)
-
-        submit = br.find_element_by_id("signInSubmit")
-        submit.click()  # This blocks until page loads but AJAX may continue
-        time.sleep(5)  # Wait additional time for the research page to load
+        input("Please find the newly opened browser window\n" +
+              "  and authenticate.  Once you have successfully\n" +
+              "  authenticated, please return to this window and\n" +
+              "Press Enter to continue...")
         self.is_logged_in = True
         return
 
