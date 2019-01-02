@@ -9,13 +9,12 @@ install:
 	pip install --editable .
 
 pep8:
-	yapf -i $$(find * -type f -name '*.py')
-	flake8 ./app ./tests
+	yapf --style='{based_on_style: pep8, column_limit: 119}' -i $$(find * -type f -name '*.py')
+	flake8 --max-line-length=119 ./app ./tests
 
-test:
+test: pep8
 	pip -q install -r test-requirements.txt
 	pytest
-	flake8 ./app ./tests
 
 dist: clean
 	(cd $(BASE) && $(PYTHON) setup.py sdist)

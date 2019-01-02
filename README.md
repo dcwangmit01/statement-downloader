@@ -1,21 +1,21 @@
-# amazon-browser-cli
+# statment-downloader
 
 ## Summary
 
-This Amazon-Browser-CLI tool may be used to clear all Video History from an
-Amazon Account.  It may be used to effectively reset viewing preferences and
-suggestions for an AWS account.  It is needed, because Amazon does not provide
-a way to to reset Video History without individually clicking on every single
-watched video.
+This `statement-downloader` tool may be used to download statements banks.
 
+
+* Charlese Schwab: https://www.schwab.com
+  * All Bank Statements
+  * All Brokerage Statements
 
 ## How it works
 
-The cli program will use Selenium to drive a web browser to simulate a user
-which first logs into Amazon, then moves to the Video History page, and then
-clicks on each movie one at a time.  A web browser will open during the
-execution of the program.
-
+* The cli program will start a Selenium web browser.
+* It directs the web browser to an instution's web page.
+* It prompts the user to login to the web page.
+* After the user logs in, the user presses enter to continue
+* The script takes over and downloads all items
 
 ## Instructions
 
@@ -35,5 +35,6 @@ make install
 
 # Run the program
 #   Follow the prompts to login, and press enter to continue
-amazon-browser-cli video clear_history
+# statement-downloader schwab all <downloads_folder> <save_to_folder>
+statement-downloader schwab all ~/Downloads ~/Downloads/tmp/
 ```

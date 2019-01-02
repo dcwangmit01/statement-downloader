@@ -5,7 +5,7 @@ import logging
 
 from app import app
 from app import cli as app_cli
-from app.amazon_browser import AmazonBrowser
+from app.schwab import Schwab
 
 log = logging.getLogger(__name__)
 
@@ -24,27 +24,25 @@ days_to_cache = 1
 
 @click.group()
 def cli():
-    """Subcommand for video"""
+    """Subcommand for schwab"""
 
     pass
 
 
-@cli.command()
+@cli.command(name='all')
+@click.argument('download-dir', type=click.Path(exists=True))
+@click.argument('save-dir', type=click.Path(exists=True))
 @app_cli.pass_context
-def clear_history(ctx):
-    """This command loads config.yaml and the current ENV-ironment,
-    creates a single merged dict, and prints to stdout.
-    """
+def _all(ctx, download_dir, save_dir):
+    """Downloads all schwab statements"""
 
     # use cache to reduce web traffic
     requests_cache.CachedSession(
-        cache_name='cache',
-        backend='sqlite',
-        expire_after=datetime.timedelta(days=days_to_cache))
+        cache_name='cache', backend='sqlite', expire_after=datetime.timedelta(days=days_to_cache))
 
-    ab = AmazonBrowser()
-    ab.login()
-    ab.video_clear_history()
+    s = Schwab(download_dir, save_dir)
+    s.login()
+    s.download_all()
 
 
 #####################################################################

@@ -41,8 +41,7 @@ class ExecUtils(object):
         cmd = cmd.strip()  # strip whitespace
         try:
             log.debug("executing cmd[{}]".format(cmd))
-            res = subprocess.check_output(
-                cmd, shell=True, executable='/bin/bash')
+            res = subprocess.check_output(cmd, shell=True, executable='/bin/bash')
             res = res.strip()  # strip whitespace
             log.debug("returned[{}]".format(res))
             return (res, None)
@@ -205,15 +204,12 @@ class JinjaUtils(object):
         cert.get_subject().C = country
         cert.get_subject().ST = state_province
         cert.get_subject().L = locality
-        cert.get_subject().O = org
+        cert.get_subject().O = org  # noqa (skip pep8)
         cert.get_subject().OU = org_unit
         cert.get_subject().CN = common_name
         if subject_alt_names:
             subject_alt_names = ", ".join(subject_alt_names).encode("utf-8")
-            cert.add_extensions([
-                crypto.X509Extension("subjectAltName".encode("utf-8"), False,
-                                     subject_alt_names)
-            ])
+            cert.add_extensions([crypto.X509Extension("subjectAltName".encode("utf-8"), False, subject_alt_names)])
         cert.set_serial_number(random.getrandbits(64))
         cert.gmtime_adj_notBefore(0)
         cert.gmtime_adj_notAfter(validity_days * 24 * 60 * 60)
@@ -222,8 +218,7 @@ class JinjaUtils(object):
         cert.sign(k, 'sha1')
 
         # return a tuple of the private key and the self-signed cert
-        return (crypto.dump_privatekey(crypto.FILETYPE_PEM, k),
-                crypto.dump_certificate(crypto.FILETYPE_PEM, cert))
+        return (crypto.dump_privatekey(crypto.FILETYPE_PEM, k), crypto.dump_certificate(crypto.FILETYPE_PEM, cert))
 
     @staticmethod
     def ceph_key():
@@ -281,12 +276,7 @@ class YamlUtils(object):
         """
         # Use width=1000000 to prevent wrapping
         # Use double-quote style to prevent escaping of ' to ''
-        return yaml.dump(
-            dict_,
-            Dumper=IgnoreAliasesDumper,
-            default_flow_style=False,
-            width=1000000,
-            default_style='"')
+        return yaml.dump(dict_, Dumper=IgnoreAliasesDumper, default_flow_style=False, width=1000000, default_style='"')
 
     @staticmethod
     def yaml_dict_from_string(string_):
